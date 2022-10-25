@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="Evelyn Goodman">
+  <meta name="description" content="Project bookshelf page">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bookshelf</title>
+
+  <!-- Boostrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <!-- relative CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="icon" type="image/png" href="../img/bookshelf.png">
+</head>
+
+<body>
+  <!-- Header: [from left to right] logo, home, bookshelves, browse, community-->
+  <header class="site-header">
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Goodreads <em>re-imagined</em></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Home</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Bookshelves</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Browse</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Community</a></li>
+          </ul>
+          <!--profile image: for static mockup, clicking on profile will lead to sign up page, when adding JS, create a drop down menu with Profile, Setting, Sign out-->
+          <span class="navbar-text text-end">
+            <a href="splash.html"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="profile bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+              </svg></a>
+          </span>
+        </div>
+      </div>
+      </div>
+    </nav>
+  </header>
+  <!-- main: scrolling list of books in a given bookshelf-->
+  <!--for cards: https://getbootstrap.com/docs/5.0/components/card/-->
+  <main>
+    <div class="container text-center px-4">
+      <p class="text-start"><a href="index.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+          </svg> back to bookshelves</a></p>
+      <h1 class="text-center">To Read</h1>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="text-start">Reccomended</p>
+          <!-- start carousel, JS is not activated for the static mockup-->
+          <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img class="carousel_img" src="img/book-ex7.jpg" class="d-block w-100" alt="Invisisble Life of Addie LaRue book cover">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>The Invisible Life of Addie LaRue</h5>
+                  <p>by V.E. Schwab</p>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          <!-- end carousel-->
+          <p class="text-start" id="tags">Tags</p>
+          <span class="badge rounded-pill bg-secondary">Fiction</span>
+          <span class="badge rounded-pill bg-secondary">YA</span>
+          <span class="badge rounded-pill bg-secondary">Fantasy</span>
+          <span class="badge rounded-pill bg-secondary">Female Authors</span>
+          <span class="badge rounded-pill bg-secondary">Coming of age</span>
+          <span class="badge rounded-pill bg-secondary">Contemporary</span>
+          <span class="badge rounded-pill bg-secondary">Romance</span>
+        </div>
+        <div class="col-sm-9">
+          <p class="text-start">Books in <em>To Read</em></p>
+          <div class="row row-cols-3 gx-3 gy-3">
+            <div class="col-6 col-sm-6">
+              <div class="card text-start mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="img/book-ex1.jpg" class="img-fluid" id="book-cover" alt="Year of Rest and Relaxation book cover">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">My Year of Rest and Relaxation</h5>
+                      <p class="card-text"><small class="text-muted">by Ottessa Moshfegh</small></p>
+                      <div class="book-desc">
+                        <p class="card-text">A young womans efforts to duck the ills of the world by embarking on an extended hibernation with the help...</p>
+                      </div>
+                      <p class="card-text"><small class="text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                          </svg> added on 10/11/2022</small></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-sm-6">
+              <div class="card text-start mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="img/book-ex2.jpg" class="img-fluid" id="book-cover" alt="The Mysterious Affair at Styles book cover">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">The Mysterious Affair at Styles</h5>
+                      <p class="card-text"><small class="text-muted">by Agatha Christie</small></p>
+                      <div class="book-desc">
+                        <p class="card-text">A refugee of the Great War, Poirot has settled in England near Styles Court, the country estate of...</p>
+                      </div>
+                      <p class="card-text"><small class="text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                          </svg> added on 10/10/2022</small></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-sm-6">
+              <div class="card text-start mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="img/book-ex3.jpeg" class="img-fluid" id="book-cover" alt="Eight White Nights book cover">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">Eight White Nights</h5>
+                      <p class="card-text"><small class="text-muted">by Andre Aciman</small></p>
+                      <div class="book-desc">
+                        <p class="card-text">Eight White Nights is an unforgettable journey through that enchanted terrain where passion and fear and the...</p>
+                      </div>
+                      <p class="card-text"><small class="text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                          </svg> added on 9/23/2022</small></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-sm-6">
+              <div class="card text-start mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="img/book-ex4.jpeg" class="img-fluid" id="book-cover" alt="Sweetbitter book cover">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">Sweetbitter</h5>
+                      <p class="card-text"><small class="text-muted">by Stephanie Danler</small></p>
+                      <div class="book-desc">
+                        <p class="card-text">The bestselling novel about a young woman's coming-of-age, set against the glitzy, grimy backdrop of...
+                        </p>
+                      </div>
+                      <p class="card-text"><small class="text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                          </svg> added on 6/1/2022</small></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-sm-6">
+              <div class="card text-start mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="img/book-ex5.jpg" class="img-fluid" id="book-cover" alt="The Raven Boys book cover">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">The Raven Boys</h5>
+                      <p class="card-text"><small class="text-muted">by Maggie Stiefvater</small></p>
+                      <div class="book-desc">
+                        <p class="card-text">It is freezing in the churchyard, even before the dead arrive. Every year, Blue Sargent stands next to...</p>
+                      </div>
+                      <p class="card-text"><small class="text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                          </svg> added on 5/17/2022</small></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-sm-6">
+              <div class="card text-start mb-3">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="img/book-ex6.jpg" class="img-fluid" id="book-cover" alt="Starless Sea book cover">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">The Starless Sea</h5>
+                      <p class="card-text"><small class="text-muted">by Erin Morgenstern</small></p>
+                      <div class="book-desc">
+                        <p class="card-text">Zachary Ezra Rawlins is a graduate student in Vermont when he discovers a mysterious book hidden in...</p>
+                      </div>
+                      <p class="card-text"><small class="text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                          </svg> added on 5/11/2022</small></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <!--include copyright info, not provided in the project spec though-->
+  </footer>
+</body>
+
+</html>
