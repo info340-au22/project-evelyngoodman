@@ -1,0 +1,20 @@
+body {
+    padding: 50px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+h1 {
+    text-align: center;
+    color:rgb(96, 125, 212);
+}
+
+
+
+/* I found this idea for a gradient background from this source: https://blog.logrocket.com/advanced-effects-with-css-background-blend-modes-4b750198522a/ */
+.spectrum-background {
+    background:
+        linear-gradient(rgb(189, 157, 206), transparent),
+        linear-gradient(to top left, rgb(213, 244, 179), transparent),
+        linear-gradient(to top right, rgb(112, 158, 250), transparent);
+    background-blend-mode: screen;
+}
