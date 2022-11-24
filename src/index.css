@@ -1,0 +1,241 @@
+html {
+    height: 100%;
+}
+
+body {
+    padding-top: 90px;
+    padding-bottom: 20px;
+    background-color: white;
+} 
+
+h1 {
+    font-size: 70px;
+    padding-bottom: 30px;
+}
+
+footer {
+    padding-top: 10px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+}
+
+#splash {
+    padding: 80px;
+}
+
+/* might need to change if adding more rec lists */
+#explore {
+    padding-bottom: 80px; 
+}
+
+/* flex box styling*/
+.container {
+    display: flex;
+}
+
+#header {
+    justify-content: center;
+}
+
+#lib {
+    justify-content: space-between;
+    padding-bottom: 40px;
+}
+
+#shelf-cards {
+    padding-bottom:90px;
+}
+
+section.one {
+    flex-basis: 240px;
+    margin-left: 2rem;
+  }
+  
+section.two {
+    flex: 1;
+}
+
+.flex-container section {
+    padding: 1em;
+  }
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+  }
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+.item {
+    flex: 0 1 auto;
+}
+
+.shelf-item {
+    flex: 1;
+}
+
+.card {
+    padding: 8px;
+}
+
+#book-card {
+    width: 16rem;
+}
+
+#shelf-card {
+    width: 18rem;
+    padding: 10px;
+}
+
+#card-odd {
+    border-radius: 90px 90px 0px 0px; 
+}
+
+#card-even {
+    border-radius: 0px 0px 90px 90px; 
+}
+
+.header-item {
+    padding: 10px;
+    flex: 1px;
+    opacity: .85;
+}
+
+#header-text {
+    max-width: 400px;
+}
+
+#rec-title {
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+
+/* end flex box styling*/
+
+#book-cover {
+    border-radius: 5px 5px 0px 0px;
+}
+
+.book-desc {
+    height: 100px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.new-shelf-form {
+    padding: 80px;
+}
+
+.form-check {
+    margin-top: 1.25rem;
+}
+
+.em-labels {
+    font-style: normal;
+    font-weight: bold;
+}
+
+/* for the solution to make the background image opaque but not the content, I followed this tutorial: https://coder-coder.com/background-image-opacity/ */
+.splash-body {
+    position: relative; 
+    height: 100vh;
+    width: 100%;
+}
+
+.splash-body::before {
+    content: "";
+    /* background-image: url("public/img/background.jpeg"); */
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 50%;
+}
+/* 
+h1, label, div {
+    position: relative;
+    color: black;  
+} */
+
+img {
+    width: 400px;
+    /* fix height to be equal across all */
+    height: 320px;
+}
+
+.carousel_img {
+    width: 220px;
+    filter: blur(2.5px);
+}
+
+#add-shelf {
+    padding: 160px 50px;
+}
+
+#add-shelf a {
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.splash-image {
+    height: 100%;
+    width: 100%;
+    /* background-image: url("../img/book-collage.png"); */
+}
+
+#form-view {
+    padding: 60px 200px;
+}
+
+#form-view div {
+    margin-top: 10px;
+}
+
+#form-view button {
+    margin-top: 30px;
+}
+
+#bookshelf-card {
+    width: 20rem;
+}
+
+#shelf-card {
+    max-width: 540px;
+}
+
+#tags {
+    padding-top: 20px;
+}
+
+.profile {
+    margin-right: 20px;
+}
+
+/* smaller devices (tablets, 768px and below) */
+@media (max-width: 768px) { 
+    #header-covers {
+        display: none;
+    }
+ }
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    #book-cover {
+        border-radius: 5px 0px 0px 5px;
+    }
+ }

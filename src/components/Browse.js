@@ -1,5 +1,6 @@
 import React from "react";
 import { RecList } from "./BookLists";
+import RECLIST_DATA from '../data/reclist_data.json';
 
 // props: title
 // QUESTION: How do I make sure the rec list contains unique books?
@@ -12,12 +13,12 @@ function Recommended (props){
         <h2>{props.title}</h2>
         </div>
         <div className="container">
-            <div className="item">
+            <div className="row">
                 <RecList bookData={props.data}/>
             </div>
         </div>
     </>
-    )
+    );
 }
 
 export function Browse (props) {
@@ -27,10 +28,11 @@ export function Browse (props) {
       <div id="header-text" className="item">
         <h1>Find Your Next Read</h1>
         <p>Explore book lists curated for you that prioritize underrepresented authors, stories, and characters.</p>
-        <button type="button" className="btn btn-dark btn-lg rounded-0">Explore</button>
+        <a href="#explore"><button type="button" className="btn btn-dark btn-lg rounded-0">Explore</button></a>
+        {/* for button interaction: scroll to rec lists on same page */}
       </div>
       <div className="item">
-        <div className="container">
+        <div id="header-covers" className="container">
           <div className="item header-item">
             {/* <!-- start card --> */}
               <img id="card-odd" src="img/header2.jpg" className="card-img-top" alt="..." />
@@ -49,8 +51,10 @@ export function Browse (props) {
         </div>
       </div>
     </div>
-    {/* <Recommended title="Written by Women of Color" data={}/>  */}
+    <div id="explore">
+    <Recommended title="Written by Women of Color" data={RECLIST_DATA}/>
+    </div>
     {/* get data from: https://electricliterature.com/62-books-by-women-of-color-to-read-in-2022/ */}
     </>
-    )
+    );
 }

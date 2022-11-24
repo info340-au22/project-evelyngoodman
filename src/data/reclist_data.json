@@ -1,0 +1,44 @@
+[
+    {
+        "cover": "../img/brown_girls.jpeg",
+        "title": "Brown Girls",
+        "author": " Daphne Palasi Andreades",
+        "description": "A blazingly original debut novel about a group of friends and their immigrant families from Queens, New York--a tenderly observed, fiercely poetic love letter to a modern generation of brown girls.",
+        "link": "https://www.goodreads.com/en/book/show/57717412"
+    },
+    {
+        "cover": "../img/olga_dies_dreaming.jpeg",
+        "title": "Olga Dies Dreaming",
+        "author": "Xóchitl González",
+        "description": "It's 2017, and Olga and her brother, Pedro 'Prieto' Acevedo, are bold-faced names in their hometown of New York. Prieto is a popular congressman representing their gentrifying Latinx neighborhood in Brooklyn while Olga is the tony wedding planner for Manhattan's powerbrokers.",
+        "link": "https://www.goodreads.com/book/show/57693171-olga-dies-dreaming?ac=1&from_search=true&qid=3L7AziFDef&rank=1"
+    },
+    {
+        "cover": "../img/fiona_and_jane.jpeg",
+        "title": "Fiona and Jane",
+        "author": "Jean Chen Ho",
+        "description": "A witty, warm, and irreverent book that traces the lives of two young Taiwanese American women as they navigate friendship, sexuality, identity, and heartbreak over two decades.",
+        "link": "https://www.goodreads.com/book/show/57238523-fiona-and-jane?from_search=true&from_srp=true&qid=wdxtZsFi9u&rank=1"
+    },
+    {
+        "cover": "../img/people_change.jpeg",
+        "title": "People Change",
+        "author": "Vivek Shraya",
+        "description": "Vivek Shraya knows this to be true: people change. We change our haircuts and our outfits and our minds. We change names, titles, labels. We attempt to blend in or to stand out. We outgrow relationships, we abandon dreams for new ones, we start fresh. We seize control of our stories. We make resolutions.",
+        "link": "https://www.goodreads.com/book/show/58587364-people-change?ac=1&from_search=true&qid=RssWYf93Wf&rank=1"
+    },
+    {
+        "cover": "../img/when_we_were_birds.jpeg",
+        "title": "When We Were Birds",
+        "author": "Ayanna Lloyd Banwo",
+        "description": "A mythic love story set in Trinidad and Tobago, Ayanna Lloyd Banwo's radiant debut introduces two unforgettable outsiders brought together by their connection with the dead.",
+        "link": "https://www.goodreads.com/book/show/58065031-when-we-were-birds?from_search=true&from_srp=true&qid=N15nCZRUT4&rank=1"
+    },
+    {
+        "cover": "../img/disorientation.jpeg",
+        "title": "Disorientation",
+        "author": "Elaine Hsieh Chou",
+        "description": "A Taiwanese American womans coming of consciousness ignites eye-opening revelations and chaos on a college campus in this outrageously hilarious yet startlingly tender debut novel.",
+        "link": "https://www.goodreads.com/book/show/58350424-disorientation?ac=1&from_search=true&qid=uDLX7qRwLP&rank=1"
+    }
+  ]
