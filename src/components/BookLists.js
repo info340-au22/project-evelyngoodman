@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+// import { useParams } from 'react-router-dom';
 import RECLIST_DATA from '../data/reclist_data.json'
 
 // CONTAINS: Components for generic book cards used throughout the app
@@ -8,15 +9,71 @@ import RECLIST_DATA from '../data/reclist_data.json'
 
 // generic book card
 function BookCard (props) {
+
+    // TODO: delete book from shelf
+    // cant add book multiple times
+
     let bookData = props.bookData;
-    // props: cover, title, author
+    let addToShelf= props.addToShelf;
+    const [selectInputs, setSelectInputs] = useState(null)
+
+    const handleChange = (event) => {
+        console.log(event.value);
+        setSelectInputs(event.value); //
+    }
+
+    const handleClick = (event) => {
+        // form being submitted
+        // prevents the submit button from refreshing the page
+        event.preventDefault();
+        // now i need to send this book data to the right shelf
+        return addToShelf(selectInputs, bookData);
+      }
+  
+      const onClick = (event) => {
+        handleClick(event);
+      }
+
+    // TODO: i only want to be able to ADD to a bookshelf when im not already in a shelf... 
+    // do i just check what my URL address is and then render content?
+
+    // loop through existing state shelves and map each to a select option
+    let shelves = props.bookshelves.map((shelf) => {
+        return <option value={shelf.title} key={shelf.title}>{shelf.title}</option>
+    })
+
     return (
         <div id="book-card" className="card border-0">
         <img src={bookData.cover} className="card-img-top" alt={bookData.title} />
         <div className="card-body">
           <h5 className="card-title">{bookData.title}</h5>
           <p className="card-text">By {bookData.author}</p>
-          <button type="button" className="btn btn-dark btn-sm rounded-0">Read More</button>
+          <button type="button" className="btn btn-dark btn-sm rounded-0" data-bs-toggle="modal" data-bs-target="#readMoreModal">Read More</button>
+          {/* Modal */}
+            <div className="modal fade" id="readMoreModal" tabIndex="-1" aria-labelledby="readMoreModalLabel" aria-hidden="true">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                <div className="modal-header">
+                    <h1 className="modal-title fs-5" id="readMoreModalLabel">{bookData.title} by {bookData.author}</h1>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div className="modal-body">
+                <p>{bookData.description}</p>
+                <p>Add to bookshelf? <small className="text-muted">*optional</small></p>
+                <select className="form-select" aria-label="Default select example" name="shelf" onChange={handleChange}>
+                    {/* do i set value to {newshelf.cover} or the actual image link it refers to? */}
+                    <option value="N/A" selected>No</option>
+                    {shelves}
+                </select>
+                </div>
+                <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={onClick}>Save</button>
+                </div>
+                </div>
+            </div>
+            </div>
+        {/* end modal */}
         </div>
       </div>
     );
@@ -24,12 +81,12 @@ function BookCard (props) {
 
 // for browse page
 // props: object containing book info
-export function RecList (props) {
+export function BookList (props) {
     const data =  props.bookData;
     let list = data.map((book) => {
-        return <BookCard bookData={book} key={book.title}/>;
+        return <BookCard bookshelves={props.bookshelves} bookData={book} addToShelf={props.addToShelf} key={book.title}/>;
     });
-    console.log(list)
+    // console.log(list);
     return (
         <>{list}</>
     );
@@ -43,7 +100,21 @@ function Tag(props) {
 }
 
 // for bookshelves
-export function ShelfList (props) {
+export function ShelfContent (props) {
+    const title = props.title;
+    let shelfContent = props.shelfContent;
+
+    // use params
+    // not title, id
+
+    // // id should be from route
+    // let content = []
+    // for (const id in shelfContent) {
+    //     if (id === title) {
+    //         content = shelfContent[id].books;
+    //     }
+    // }
+
     return (
         <>
         <div id="lib" className="container">
@@ -52,10 +123,11 @@ export function ShelfList (props) {
         </svg> back to bookshelves</Link></p>
         </div>
         <div className="container justify-content-center">
-        <h1>To Read</h1>
+        <h1>{title}</h1>
         </div>
         <div className="flex-container">
             <section className="one">
+                {/* TODO: how to add tags */}
             <h2 className="text-start" id="tags">Tags</h2>
             <Tag tag="Fiction"/>
             <Tag tag="YA"/>
@@ -68,7 +140,7 @@ export function ShelfList (props) {
     
             <section className="two">
                     <div id="shelf-cards" className="card-container">
-                        <RecList bookData={RECLIST_DATA} />
+                        <BookList bookData={content}/>
                     </div>
             </section>
     </div>

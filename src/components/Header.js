@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { getAuth, signOut } from 'firebase/auth';
 
 export function Header(props) {
+  const currentUser = props.currentUser;
+  const handleSignOut = (event) => {
+    signOut(getAuth());
+  }  
+
     return (
         <header className="site-header">
           <nav className="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
@@ -12,15 +18,24 @@ export function Header(props) {
               </button>
               <div className="collapse navbar-collapse" id="navbarText">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0"> 
-                  <li className="nav-item"><Link className="nav-link" to="/">Browse</Link></li>
-                  <li className="nav-item"><Link className="nav-link" to="/bookshelves">Bookshelves</Link></li>
-                </ul>
-                <span className="navbar-text text-end">
-                  <Link to="/signin"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" className="profile bi bi-person-circle" viewBox="0 0 16 16">
-                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                      <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                    </svg></Link>
+                <li className="nav-item"><Link className="nav-link" to="/">Browse</Link></li>
+                {currentUser.userId && 
+                  <>
+                    <li className="nav-item"><Link className="nav-link" to="/bookshelves">Bookshelves</Link></li>
+                    <li className="nav-item">
+                    <span className="navbar-text text-end">
+                      <button className="btn btn-secondary ms-2" onClick={handleSignOut}>Sign Out</button>
+                      </span>
+                    </li>
+                  </>
+                }{!currentUser.userId &&
+                  <li className="nav-item">
+                    <span className="navbar-text text-end">
+                  <Link to="/signin"><button className="btn btn-secondary ms-2">Sign In</button></Link>
                 </span>
+                  </li>
+                }
+                </ul>
               </div>
             </div>
           </nav>

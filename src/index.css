@@ -15,7 +15,7 @@ h1 {
 
 footer {
     padding-top: 10px;
-    position: fixed;
+    position: relative;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -116,6 +116,12 @@ section.two {
 #rec-title {
     margin-top: 60px;
     margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#rec-title h1 + p {
+    display: inline;
 }
 
 /* end flex box styling*/

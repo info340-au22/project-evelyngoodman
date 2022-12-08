@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
+import { ShelfContent } from './BookLists';
 
 const priv = <div><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-lock-fill" viewBox="0 0 16 16"><path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" /></svg><p>Private</p></div>;
 
@@ -14,7 +15,8 @@ export function NewShelfForm (props) {
       cover: "",
       title: "",
       description: "",
-      privacy: false
+      privacy: false,
+      books: {}
     });
 
     const handleChange = (event) => {
@@ -44,6 +46,9 @@ export function NewShelfForm (props) {
     const onClick = (event) => {
       routeChange();
       handleClick(event);
+      // const db = getDatabase(); //"the database"
+      // const allShelvesRef = ref(db, 'shelves');
+      // firebasePush(allShelvesRef, formInputs); //???????
     }
 
     return (
@@ -77,7 +82,7 @@ export function NewShelfForm (props) {
             </label>
           </div> */}
           <div className="form-check">
-            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" name="privacy" onChange={handleChange}/>
+            <input className="form-check-input" type="radio" id="flexRadioDefault2" name="privacy" onChange={handleChange}/>
             <label className="form-check-label" htmlFor="flexRadioDefault2">
               {priv}
             </label>
@@ -86,5 +91,5 @@ export function NewShelfForm (props) {
         </form>
     </div>
   </>
-    );
+  );
 }
