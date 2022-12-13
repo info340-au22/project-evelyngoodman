@@ -224,6 +224,10 @@ a {
     max-width: 540px;
 }
 
+#title-error-message {
+    color:red;
+}
+
 #tags {
     padding-top: 20px;
 }

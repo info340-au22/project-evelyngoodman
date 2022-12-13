@@ -1,7 +1,8 @@
 import React from "react";
 import { BookList } from "./BookLists";
 import { Link } from "react-router-dom";
-import RECLIST_DATA from '../data/reclist_data.json';
+import WOC_DATA from '../data/WOC_data.json';
+import D_DATA from '../data/D_data.json';
 
 // props: title
 // QUESTION: How do I make sure the rec list contains unique books?
@@ -18,7 +19,7 @@ function Recommended (props){
         </div>
         <div className="container">
             <div className="row">
-                <BookList bookshelves={props.bookshelves} bookData={props.data} addToShelf={props.addToShelf}/>
+                <BookList bookshelves={props.bookshelves} bookData={props.data} currentUser={props.currentUser}/>
             </div>
         </div>
     </>
@@ -56,7 +57,8 @@ export function Browse (props) {
       </div>
     </div>
     <div id="explore">
-    <Recommended title="Written by Women of Color" data={RECLIST_DATA} bookshelves={props.bookshelves} addToShelf={props.addToShelf}/>
+    <Recommended title="Written by Women of Color" data={WOC_DATA} bookshelves={props.bookshelves} currentUser={props.currentUser}/>
+    <Recommended title="Featuring Characters with Disabilities" data={D_DATA} bookshelves={props.bookshelves} currentUser={props.currentUser}/>
     </div>
     {/* get data from: https://electricliterature.com/62-books-by-women-of-color-to-read-in-2022/ */}
     </>

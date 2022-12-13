@@ -19,14 +19,25 @@ export function NewShelfForm (props) {
       books: {}
     });
 
+    const titleError = React.createRef();
+
     const handleChange = (event) => {
       setFormInputs({ ...formInputs, [event.target.name]: event.target.value });
       if (event.target.name === 'privacy') {
-        if (event.target.value === 'on') {
+        if (event.target.checked) {
           setFormInputs({ ...formInputs, [event.target.name]: true });
+        } else {
+          setFormInputs({ ...formInputs, [event.target.name]: false });
         }
       }
-      // console.log(formInputs)
+      //check to make sure title is unique
+      if (event.target.name === 'title') {
+        for (const shelf in props.bookshelves) {
+          if (event.target.value === shelf.title) {
+            titleError.current.classList.remove("d-none");
+          } 
+        }
+      }
     }
 
     let navigate = useNavigate(); // is this redundant?
@@ -57,7 +68,8 @@ export function NewShelfForm (props) {
         <form>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">Bookshelf Title</label>
-            <input type="text" className="form-control" name="title" onChange={handleChange}/>
+            <input type="text" id="titleInput" className="form-control" name="title" onChange={handleChange}/>
+            <p id="title-error-message" ref={titleError} className="d-none">You must choose a title that is unique!</p>
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">Add a description</label>
@@ -82,8 +94,8 @@ export function NewShelfForm (props) {
             </label>
           </div> */}
           <div className="form-check">
-            <input className="form-check-input" type="radio" id="flexRadioDefault2" name="privacy" onChange={handleChange}/>
-            <label className="form-check-label" htmlFor="flexRadioDefault2">
+            <input className="form-check-input" type="checkbox" id="flexCheckDefault" name="privacy" onChange={handleChange}/>
+            <label className="form-check-label" htmlFor="flexCheckDefault">
               {priv}
             </label>
           </div>

@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { useParams } from 'react-router-dom';
-import RECLIST_DATA from '../data/reclist_data.json'
+import {Button} from 'react-bootstrap';
+import {Modal} from 'react-bootstrap';
+import { getDatabase, ref, get, push as firebasePush, onValue, remove as firebaseRemove} from 'firebase/database'; //realtime
+import { useParams } from 'react-router-dom';
 
 // CONTAINS: Components for generic book cards used throughout the app
 //           List components for the reccommended lists on the browse page
@@ -12,35 +14,70 @@ function BookCard (props) {
 
     // TODO: delete book from shelf
     // cant add book multiple times
-
     let bookData = props.bookData;
-    let addToShelf= props.addToShelf;
+    //console.log(bookData)
     const [selectInputs, setSelectInputs] = useState(null)
 
     const handleChange = (event) => {
-        console.log(event.value);
-        setSelectInputs(event.value); //
+        console.log(event.target.value); // why is this undefined
+        setSelectInputs(event.target.value); //
     }
 
     const handleClick = (event) => {
-        // form being submitted
         // prevents the submit button from refreshing the page
         event.preventDefault();
-        // now i need to send this book data to the right shelf
-        return addToShelf(selectInputs, bookData);
-      }
-  
-      const onClick = (event) => {
-        handleClick(event);
+        let currentUser = props.currentUser;
+        console.log(currentUser);
+        if (currentUser.userId !== null) {
+            const db = getDatabase();
+            const userShelves = ref(db, "shelves/"+currentUser.userId);
+            // loop through snapshot of current ststa eof user booksgelves to match
+            // the given selectInputs to a specific bookshelf
+            console.log(selectInputs)
+            let title = selectInputs.toLowerCase();
+            title = title.replace(" ", "");
+            const uniqueShelfRef = ref(db, "shelves/"+currentUser.userId+"/"+title+"/books");
+            firebasePush(uniqueShelfRef, bookData);
+            // // lift ot state
+            // const shelfKey = get(userShelves).then((snapshot) => {
+            //     if (snapshot.exists()) {
+            //         const snapshotArr = snapshot.val();
+            //         console.log(snapshotArr);
+            //         // find which bookshelf is == to the input title 
+            //         // add bookcard to that shelf
+            //         let id = 0;
+            //         snapshot.forEach((shelf) => {
+            //             // console.log(shelf.title)
+            //             id +=1;
+            //             // console.log(id)
+            //             if (shelf.title === selectInputs) {
+            //                 const uniqueShelfRef = ref(db, "shelves/"+currentUser.userId+"/"+(id-1)+"/books");
+            //                 firebasePush(uniqueShelfRef, bookData);
+            //             }
+            //         })
+            //     } else {
+            //     console.log("No data available");
+            //     }
+            // }).catch((error) => {
+            //     console.error(error);
+            // });
+        }
+        setShow(false);
       }
 
     // TODO: i only want to be able to ADD to a bookshelf when im not already in a shelf... 
     // do i just check what my URL address is and then render content?
 
     // loop through existing state shelves and map each to a select option
+    //console.log(props.bookshelves);
     let shelves = props.bookshelves.map((shelf) => {
-        return <option value={shelf.title} key={shelf.title}>{shelf.title}</option>
+        return <option value={shelf.title} key={shelf.title}>{shelf.title}</option>;
     })
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     return (
         <div id="book-card" className="card border-0">
@@ -48,32 +85,28 @@ function BookCard (props) {
         <div className="card-body">
           <h5 className="card-title">{bookData.title}</h5>
           <p className="card-text">By {bookData.author}</p>
-          <button type="button" className="btn btn-dark btn-sm rounded-0" data-bs-toggle="modal" data-bs-target="#readMoreModal">Read More</button>
-          {/* Modal */}
-            <div className="modal fade" id="readMoreModal" tabIndex="-1" aria-labelledby="readMoreModalLabel" aria-hidden="true">
-            <div className="modal-dialog">
-                <div className="modal-content">
-                <div className="modal-header">
-                    <h1 className="modal-title fs-5" id="readMoreModalLabel">{bookData.title} by {bookData.author}</h1>
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div className="modal-body">
+          <button variant="primary" className="btn btn-dark btn-sm rounded-0" onClick={handleShow}>Read More</button>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>{bookData.title} by {bookData.author}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
                 <p>{bookData.description}</p>
-                <p>Add to bookshelf? <small className="text-muted">*optional</small></p>
+                <p><a href={bookData.link}>Read more</a></p>
                 <select className="form-select" aria-label="Default select example" name="shelf" onChange={handleChange}>
-                    {/* do i set value to {newshelf.cover} or the actual image link it refers to? */}
                     <option value="N/A" selected>No</option>
                     {shelves}
                 </select>
-                </div>
-                <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={onClick}>Save</button>
-                </div>
-                </div>
-            </div>
-            </div>
-        {/* end modal */}
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={handleClick}>
+                    Save
+                </Button>
+            </Modal.Footer>
+        </Modal>
         </div>
       </div>
     );
@@ -82,14 +115,27 @@ function BookCard (props) {
 // for browse page
 // props: object containing book info
 export function BookList (props) {
+    // OLD:
     const data =  props.bookData;
+    //if (data == null) {
+    //    let list = <Link to=""><p>Add books now!</p></Link>;
+    //} else {
     let list = data.map((book) => {
-        return <BookCard bookshelves={props.bookshelves} bookData={book} addToShelf={props.addToShelf} key={book.title}/>;
+        return <BookCard bookshelves={props.bookshelves} bookData={book} currentUser={props.currentUser} key={book.title}/>;
     });
-    // console.log(list);
+    //}
+    // const currentUser = props.currentUser;
+    // const db = getDatabase();
+    // // TODO: get ref for specific book list of spcefic shelf
+    // const shelfContentRef = ref(db, "shelves/"+currentUser.userId);
+    // onValue(shelfContentRef, (snapshot) => {
+    // let list =snapshot.forEach((book)=> {
+    //     return <BookCard bookshelves={props.bookshelves} bookData={book} currentUser={props.currentUser}/>;
+    // })
     return (
         <>{list}</>
-    );
+        );
+    // console.log(list);
 }
 
 // props: tag
@@ -101,19 +147,76 @@ function Tag(props) {
 
 // for bookshelves
 export function ShelfContent (props) {
-    const title = props.title;
-    let shelfContent = props.shelfContent;
-
-    // use params
-    // not title, id
-
-    // // id should be from route
-    // let content = []
-    // for (const id in shelfContent) {
-    //     if (id === title) {
-    //         content = shelfContent[id].books;
+    const currentUser = props.currentUser;
+    //let content=shelfData.books;
+    const [content, setContent] = useState([]);
+    // const shelfId = props.shelfId;
+    const urlParamObj = useParams(); 
+    console.log(urlParamObj.shelfId);
+    let title = urlParamObj.shelfId;
+    title = title.toLowerCase();
+    title = title.replace(" ", "");
+    useEffect(() => {
+        const db = getDatabase();
+        const shelfRef = ref(db, "shelves/"+currentUser.userId+"/"+title+"/books");
+        onValue(shelfRef, (snapshot) => {
+            // this is where app will find data to display
+              if (snapshot.exists()) {
+                const snapshotArr = snapshot.val();
+                let books = Object.values(snapshotArr)
+                console.log(books);
+                setContent(books);
+              }
+          })
+    }, [])
+    // const db = getDatabase();
+    // const shelfRef = ref(db, "shelves/"+currentUser.userId+"/"+title+"/books");
+    // get(shelfRef).then((snapshot) => {
+    //     const data = snapshot.val();
+    //     console.log(data);
+    //     content = data;
+    //     console.log(content)
+    // })
+    // .catch((err) => {
+    //     console.error(err);
+    // });
+    // console.log(content)
+    // loop through snapshot of current ststa eof user booksgelves to match
+    // the given selectInputs to a specific bookshelf
+    // Q: Should this be onvalue in case the user adds a book?
+    // const rightShelf = get(userShelves).then((snapshot) => {
+    //     if (snapshot.exists()) {
+    //         // find which bookshelf is == to the input title 
+    //         // retreive books data
+    //         snapshot.forEach((shelf) => {
+    //              let key = shelf.key;
+    //              let shelfData = shelf.val();
+    //             //  console.log(key)
+    //             // console.log(id)
+    //             if (shelfData.title === urlParamObj.shelfId) {
+    //                 console.log("found it!");
+    //                 console.log(shelfData);
+    //                 return shelfData;
+    //             }
+    //         })
+    //     } else {
+    //     console.log("No data available");
     //     }
-    // }
+    // }).catch((error) => {
+    //     console.error(error);
+    // });
+
+    const handleClick = (event) => {
+        // delete shelf
+        console.log("deleted!");
+        // how to get  contents of rightShelf
+        let title = urlParamObj.shelfId;
+        title = title.toLowerCase();
+        title = title.replace(" ", "");
+        const db = getDatabase();
+        const removeRef = ref(db, "shelves/"+currentUser.userId+"/"+title);
+        firebaseRemove(removeRef);
+    }
 
     return (
         <>
@@ -123,24 +226,16 @@ export function ShelfContent (props) {
         </svg> back to bookshelves</Link></p>
         </div>
         <div className="container justify-content-center">
-        <h1>{title}</h1>
+        <h1>{urlParamObj.shelfId}</h1>
         </div>
         <div className="flex-container">
             <section className="one">
-                {/* TODO: how to add tags */}
-            <h2 className="text-start" id="tags">Tags</h2>
-            <Tag tag="Fiction"/>
-            <Tag tag="YA"/>
-            <Tag tag="Fantasy"/>
-            <Tag tag="Female Authors"/>
-            <Tag tag="Coming of age"/>
-            <Tag tag="Contemporary"/>
-            <Tag tag="Romance"/>
+                <button className="btn btn-secondary ms-2" onClick={handleClick}>Delete Bookshelf</button>
             </section>
     
             <section className="two">
                     <div id="shelf-cards" className="card-container">
-                        <BookList bookData={content}/>
+                        <BookList bookshelves={props.bookshelves} bookData={content} currentUser={props.currentUser}/>
                     </div>
             </section>
     </div>
