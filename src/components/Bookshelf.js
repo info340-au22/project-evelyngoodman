@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 import { Link } from "react-router-dom";
-import { ShelfContent } from './BookLists';
-import { getDatabase, ref, set as firebaseSet, onValue, push as firebasePush } from 'firebase/database'; //realtime
 
 
 function Bookshelf(props) {
@@ -52,49 +49,11 @@ export function BookShelfList(props) {
       // pass in shelf data instead of 3 sep props
       return <Bookshelf currentUser={currentUser} shelfData={shelf} key={shelf.title}/>;
     })
-    
-    //useEffect(() => {
-    //   // database stuff
-    //   const db = getDatabase(); //"the database"
-    //   const allShelvesRef = ref(db, "shelves");
-  
-    //   console.log(props.currentUser); // test
-  
-    //   // check for current user,
-    //   // if user logged in, attach user to bookshelves
-    //   // if no user, just display default shelf
-    //   const offFunction = onValue(allShelvesRef, (snapshot) => {
-    //     let value = snapshot.child(props.currentUser.uid).val();
-    //     if (value !== null) {
-    //       const keys = Object.keys(value);
-    //       const objArray = keys.map((key) => {
-    //         const copy = {
-    //           ...value[key]
-    //         };
-    //         copy.key = key;
-    //         return key;
-    //       })
-    //       props.setBookshelves(objArray);
-    //     } else {
-    //       props.setBookshelves(
-    //         [{
-    //           cover: "img/index-ex1.png",
-    //           title: "To Read",
-    //           description: "Your to read shelf!",
-    //           privacy: false,
-    //           books: {}
-    //         }] // test this to see if i should set this to an empty array
-    //       )
-    //     }
-    //   })
-    // }, [ ]) // specify what thing that changes needs to rerun
 
-   // modal is not working correctly
     return (
       <>
         <div id="lib" className="container">
           <h2>Your Library</h2>
-          {/* TODO: add link to new page */}
           <Link to="/newshelf"><button type="button" className="btn btn-dark btn-md rounded-0">Create Shelf</button></Link>
         </div>
         <div className="container px-4">

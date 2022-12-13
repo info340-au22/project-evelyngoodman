@@ -1,18 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { getAuth, EmailAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 
-import DEFAULT_USERS from '../data/users.json';
-
 // do we even need a component for this?
 export function Splash(props) {
-  const currentUser = props.currentUser;
-  const loginFunction = props.loginCallback;
 
   //the authenticator
   const auth = getAuth();
-    const navigateTo = useNavigate(); //navigation hook
 
   const configObj = {
     signInOptions: [

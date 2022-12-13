@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 import WOC_DATA from '../data/WOC_data.json';
 import D_DATA from '../data/D_data.json';
 
-// props: title
-// QUESTION: How do I make sure the rec list contains unique books?
-// do i pass in an array of objects?
 // props: data, title
 function Recommended (props){
     return (

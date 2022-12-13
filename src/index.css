@@ -15,7 +15,7 @@ h1 {
 
 footer {
     padding-top: 10px;
-    position: relative;
+    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -26,7 +26,6 @@ footer {
     padding: 80px;
 }
 
-/* might need to change if adding more rec lists */
 #explore {
     padding-bottom: 80px; 
 }
@@ -34,6 +33,7 @@ footer {
 /* flex box styling*/
 .container {
     display: flex;
+    padding-bottom: 60px;
 }
 
 #header {
@@ -168,15 +168,9 @@ section.two {
     left: 0px;
     opacity: 50%;
 }
-/* 
-h1, label, div {
-    position: relative;
-    color: black;  
-} */
 
 img {
     width: 400px;
-    /* fix height to be equal across all */
     height: 320px;
 }
 
@@ -201,7 +195,6 @@ a {
 .splash-image {
     height: 100%;
     width: 100%;
-    /* background-image: url("../img/book-collage.png"); */
 }
 
 #form-view {

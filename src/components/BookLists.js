@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import {Button} from 'react-bootstrap';
-import {Modal} from 'react-bootstrap';
-import { getDatabase, ref, get, push as firebasePush, onValue, remove as firebaseRemove} from 'firebase/database'; //realtime
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import { getDatabase, ref, push as firebasePush, onValue, remove as firebaseRemove} from 'firebase/database'; //realtime
 import { useParams } from 'react-router-dom';
 
 // CONTAINS: Components for generic book cards used throughout the app
@@ -30,7 +30,6 @@ function BookCard (props) {
         console.log(currentUser);
         if (currentUser.userId !== null) {
             const db = getDatabase();
-            const userShelves = ref(db, "shelves/"+currentUser.userId);
             // loop through snapshot of current ststa eof user booksgelves to match
             // the given selectInputs to a specific bookshelf
             console.log(selectInputs)
@@ -38,38 +37,11 @@ function BookCard (props) {
             title = title.replace(" ", "");
             const uniqueShelfRef = ref(db, "shelves/"+currentUser.userId+"/"+title+"/books");
             firebasePush(uniqueShelfRef, bookData);
-            // // lift ot state
-            // const shelfKey = get(userShelves).then((snapshot) => {
-            //     if (snapshot.exists()) {
-            //         const snapshotArr = snapshot.val();
-            //         console.log(snapshotArr);
-            //         // find which bookshelf is == to the input title 
-            //         // add bookcard to that shelf
-            //         let id = 0;
-            //         snapshot.forEach((shelf) => {
-            //             // console.log(shelf.title)
-            //             id +=1;
-            //             // console.log(id)
-            //             if (shelf.title === selectInputs) {
-            //                 const uniqueShelfRef = ref(db, "shelves/"+currentUser.userId+"/"+(id-1)+"/books");
-            //                 firebasePush(uniqueShelfRef, bookData);
-            //             }
-            //         })
-            //     } else {
-            //     console.log("No data available");
-            //     }
-            // }).catch((error) => {
-            //     console.error(error);
-            // });
         }
         setShow(false);
       }
 
-    // TODO: i only want to be able to ADD to a bookshelf when im not already in a shelf... 
-    // do i just check what my URL address is and then render content?
-
     // loop through existing state shelves and map each to a select option
-    //console.log(props.bookshelves);
     let shelves = props.bookshelves.map((shelf) => {
         return <option value={shelf.title} key={shelf.title}>{shelf.title}</option>;
     })
@@ -115,42 +87,20 @@ function BookCard (props) {
 // for browse page
 // props: object containing book info
 export function BookList (props) {
-    // OLD:
     const data =  props.bookData;
-    //if (data == null) {
-    //    let list = <Link to=""><p>Add books now!</p></Link>;
-    //} else {
     let list = data.map((book) => {
         return <BookCard bookshelves={props.bookshelves} bookData={book} currentUser={props.currentUser} key={book.title}/>;
     });
-    //}
-    // const currentUser = props.currentUser;
-    // const db = getDatabase();
-    // // TODO: get ref for specific book list of spcefic shelf
-    // const shelfContentRef = ref(db, "shelves/"+currentUser.userId);
-    // onValue(shelfContentRef, (snapshot) => {
-    // let list =snapshot.forEach((book)=> {
-    //     return <BookCard bookshelves={props.bookshelves} bookData={book} currentUser={props.currentUser}/>;
-    // })
     return (
         <>{list}</>
-        );
-    // console.log(list);
-}
-
-// props: tag
-function Tag(props) {
-    return (
-        <span className="badge rounded-pill bg-secondary">{props.tag}</span>
     );
 }
 
 // for bookshelves
 export function ShelfContent (props) {
     const currentUser = props.currentUser;
-    //let content=shelfData.books;
     const [content, setContent] = useState([]);
-    // const shelfId = props.shelfId;
+
     const urlParamObj = useParams(); 
     console.log(urlParamObj.shelfId);
     let title = urlParamObj.shelfId;
@@ -168,44 +118,8 @@ export function ShelfContent (props) {
                 setContent(books);
               }
           })
-    }, [])
-    // const db = getDatabase();
-    // const shelfRef = ref(db, "shelves/"+currentUser.userId+"/"+title+"/books");
-    // get(shelfRef).then((snapshot) => {
-    //     const data = snapshot.val();
-    //     console.log(data);
-    //     content = data;
-    //     console.log(content)
-    // })
-    // .catch((err) => {
-    //     console.error(err);
-    // });
-    // console.log(content)
-    // loop through snapshot of current ststa eof user booksgelves to match
-    // the given selectInputs to a specific bookshelf
-    // Q: Should this be onvalue in case the user adds a book?
-    // const rightShelf = get(userShelves).then((snapshot) => {
-    //     if (snapshot.exists()) {
-    //         // find which bookshelf is == to the input title 
-    //         // retreive books data
-    //         snapshot.forEach((shelf) => {
-    //              let key = shelf.key;
-    //              let shelfData = shelf.val();
-    //             //  console.log(key)
-    //             // console.log(id)
-    //             if (shelfData.title === urlParamObj.shelfId) {
-    //                 console.log("found it!");
-    //                 console.log(shelfData);
-    //                 return shelfData;
-    //             }
-    //         })
-    //     } else {
-    //     console.log("No data available");
-    //     }
-    // }).catch((error) => {
-    //     console.error(error);
-    // });
-
+    }, [title, currentUser.userId])
+    const navigateTo = useNavigate(); //navigation hook
     const handleClick = (event) => {
         // delete shelf
         console.log("deleted!");
@@ -216,6 +130,7 @@ export function ShelfContent (props) {
         const db = getDatabase();
         const removeRef = ref(db, "shelves/"+currentUser.userId+"/"+title);
         firebaseRemove(removeRef);
+        navigateTo("/bookshelves");
     }
 
     return (
